@@ -12,6 +12,7 @@ bg: "particles"
 </div>
 
 # A Century of Vehicular Emissions in Brazil: Unveiling the Impacts of Unique Fuel Mix on Air Quality
-## Sergio Ibarra-Espinosa _et al_
+## Un siglo de emisiones vehiculares en Brasil: Revelando los impactos sobre la calidad del aire de una mezcla de combustibles unica
+### Sergio Ibarra-Espinosa _et al_
 
 Cooperative Institute for Satellite Earth System Studies (CISESS)/Earth System Science Interdisciplinary Center (ESSIC), University of Maryland

@@ -1,14 +1,17 @@
 document.addEventListener('DOMContentLoaded', async () => {
     // --- 1. CONFIGURATION ---
     const slidesData = [
-        'content/01-intro.md',
-        'content/02-layouts.md',
-        'content/03-feature.md',
+        'content/01-portada.md',
+        'content/02-intro.md',
+        'content/03-history.md',
         'content/04-compare.md',
-        'content/05-features.md',
-        'content/06-thanks.md'
+        'content/05-objetivos.md',
+        'content/06-methods.md',
+        'content/07-results.md',
+        'content/08-conclusions.md',
+        'content/09-thanks.md'
     ];
-    
+
     let currentSlide = 0;
     const container = document.getElementById('presentation-container');
     const progressBar = document.getElementById('progress');
@@ -19,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             try {
                 const response = await fetch(slidesData[i]);
                 const text = await response.text();
-                
+
                 // Parse Frontmatter and Markdown
                 const match = text.match(/^\s*---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
                 let meta = { layout: 'centered', transition: 'blur' };
@@ -32,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 const slideEl = document.createElement('div');
                 slideEl.className = `slide layout-${meta.layout} transition-${meta.transition}`;
-                
+
                 // Set dataset attributes for theme changes
                 if (meta.accent) slideEl.dataset.accent = meta.accent;
                 if (meta.bg) slideEl.dataset.bg = meta.bg;
@@ -46,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             ${marked.parse(col.trim())}
                         </div>
                     `).join('');
-                    
+
                     // 3-column gets a grid wrapper without the unified glass panel 
                     const wrapperClass = meta.layout === 'three-column' ? 'grid-wrapper' : 'glass-panel grid-wrapper';
                     finalHTML = `<div class="${wrapperClass}">${colsHTML}</div>`;
@@ -81,14 +84,34 @@ document.addEventListener('DOMContentLoaded', async () => {
     function updateSlides() {
         const slides = document.querySelectorAll('.slide');
         if (slides.length === 0) return;
-        
+
         slides.forEach((slide, index) => {
-            slide.classList.remove('active');
-            if (index === currentSlide) {
-                slide.classList.add('active');
+            const isActive = (index === currentSlide);
+            slide.classList.toggle('active', isActive);
+
+            if (isActive) {
                 if (slide.dataset.accent) {
                     document.documentElement.style.setProperty('--accent', slide.dataset.accent);
                 }
+                // --- Try to auto-play local videos on the active slide ---
+                const videos = slide.querySelectorAll('video');
+                videos.forEach(v => {
+                    v.currentTime = 0;
+                    v.play().catch(e => console.log("Autoplay blocked or failed", e));
+                });
+            } else {
+                // --- Stop/Pause any media on inactive slides ---
+                const videos = slide.querySelectorAll('video');
+                videos.forEach(v => v.pause());
+
+                // For YouTube iframes, we reset the src to stop audio bleeding 
+                // (or just send a postMessage if we want to be fancy, but src reset is robust)
+                const iframes = slide.querySelectorAll('iframe');
+                iframes.forEach(iframe => {
+                    const originalSrc = iframe.src;
+                    iframe.src = '';
+                    iframe.src = originalSrc;
+                });
             }
         });
 
@@ -135,10 +158,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.addEventListener('touchend', (e) => {
         const touchEndX = e.changedTouches[0].screenX;
         const touchEndY = e.changedTouches[0].screenY;
-        
+
         const dx = touchEndX - touchStartX;
         const dy = touchEndY - touchStartY;
-        
+
         // Only trigger if movement is primarily horizontal and exceeds threshold
         if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
             if (dx < 0) {
@@ -176,7 +199,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function animateBg() {
         ctx.clearRect(0, 0, width, height);
-        
+
         const activeSlide = document.querySelector('.slide.active');
         const bgType = activeSlide && activeSlide.dataset.bg ? activeSlide.dataset.bg : 'particles';
         const currentAccent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
@@ -184,27 +207,27 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (bgType === 'aurora') {
             time += 0.005;
             const gradient1 = ctx.createRadialGradient(
-                width * 0.5 + Math.sin(time) * width * 0.3, 
-                height * 0.5 + Math.cos(time * 0.8) * height * 0.3, 0, 
+                width * 0.5 + Math.sin(time) * width * 0.3,
+                height * 0.5 + Math.cos(time * 0.8) * height * 0.3, 0,
                 width * 0.5, height * 0.5, width * 0.8
             );
             gradient1.addColorStop(0, currentAccent);
             gradient1.addColorStop(1, 'transparent');
 
             const gradient2 = ctx.createRadialGradient(
-                width * 0.8 + Math.cos(time * 1.2) * width * 0.2, 
-                height * 0.2 + Math.sin(time * 0.9) * height * 0.4, 0, 
+                width * 0.8 + Math.cos(time * 1.2) * width * 0.2,
+                height * 0.2 + Math.sin(time * 0.9) * height * 0.4, 0,
                 width * 0.8, height * 0.2, width * 0.6
             );
-            gradient2.addColorStop(0, 'rgba(100, 0, 255, 0.6)'); 
+            gradient2.addColorStop(0, 'rgba(100, 0, 255, 0.6)');
             gradient2.addColorStop(1, 'transparent');
 
             ctx.globalCompositeOperation = 'screen';
             ctx.globalAlpha = 0.4;
-            
+
             ctx.fillStyle = gradient1; ctx.fillRect(0, 0, width, height);
             ctx.fillStyle = gradient2; ctx.fillRect(0, 0, width, height);
-            
+
             ctx.globalCompositeOperation = 'source-over';
             ctx.globalAlpha = 1;
         } else {

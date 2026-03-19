@@ -1,5 +1,5 @@
 ---
-title: "Comparison"
+title: "Methods"
 layout: "two-column"
 transition: "glitch"
 accent: "#00ffff"
