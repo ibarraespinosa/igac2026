@@ -27,7 +27,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         'content/21-res-aq.md',
         'content/22-res-aq.md',
         'content/23-res-aq.md',
-        'content/24-thanks.md'
+        'content/24-summary.md',
+        'content/25-thanks.md'
     ];
 
     let currentSlide = 0;

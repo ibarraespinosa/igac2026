@@ -5,13 +5,15 @@ transition: "blur"
 accent: "#00ffaa"
 bg: "particles"
 ---
+
 # Thank You!
+
 ## Let's Connect
 
 I would love to continue the conversation. Scan the QR code to visit my personal website, view my portfolio, or get in touch!
 
-* **Email:** sibarrae@umd.edu
-* **LinkedIn:** /in/sibarra
+- **Email:** sibarrae@umd.edu
+- **LinkedIn:** /in/sibarra
 
 |||
 
