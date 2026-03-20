@@ -6,9 +6,28 @@ document.addEventListener('DOMContentLoaded', async () => {
         'content/03-history.md',
         'content/04-compare.md',
         'content/05-objetivos.md',
+        'content/05-vein.md',
         'content/06-methods.md',
-        'content/07-fe.md',
-        'content/20-thanks.md'
+        'content/07-fe-co.md',
+        'content/07-fe-pm.md',
+        'content/08-musica.md',
+        'content/08-res-fuel.md',
+        'content/09-res-emis.md',
+        'content/10-res-emis.md',
+        'content/11-res-emis.md',
+        'content/12-res-emis.md',
+        'content/13-res-emis.md',
+        'content/14-res-emis.md',
+        'content/15-res-emis.md',
+        'content/16-res-emis.md',
+        'content/17-res-emis.md',
+        'content/18-res-aq.md',
+        'content/19-res-aq.md',
+        'content/20-res-aq.md',
+        'content/21-res-aq.md',
+        'content/22-res-aq.md',
+        'content/23-res-aq.md',
+        'content/24-thanks.md'
     ];
 
     let currentSlide = 0;
@@ -63,15 +82,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 slideEl.innerHTML = finalHTML;
                 container.appendChild(slideEl);
 
-                // --- NEW: Navigation Dot ---
-                const dot = document.createElement('div');
-                dot.className = 'nav-dot';
-                dot.addEventListener('click', () => {
-                    currentSlide = i;
-                    updateSlides();
-                });
-                document.getElementById('nav-dots').appendChild(dot);
-
                 // --- NEW: Trigger MathJax to render equations on this slide ---
                 if (window.MathJax) {
                     MathJax.typesetPromise([slideEl]);
@@ -118,11 +128,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
 
-        const dots = document.querySelectorAll('.nav-dot');
-        dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === currentSlide);
-        });
-
         progressBar.style.width = `${((currentSlide + 1) / slides.length) * 100}%`;
     }
 
@@ -149,7 +154,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // Mobile Swipe Support
+    // Mouse Wheel Scroll Support
+    let lastWheelTime = 0;
+    window.addEventListener('wheel', (e) => {
+        const now = Date.now();
+        if (now - lastWheelTime < 800) return; // Increased debounce for smoother experience
+        
+        if (e.deltaY > 0) {
+            goToNextSlide();
+            lastWheelTime = now;
+        } else if (e.deltaY < 0) {
+            goToPrevSlide();
+            lastWheelTime = now;
+        }
+    }, { passive: true });
+
+    // Mobile Swipe & Scroll Support
     let touchStartX = 0;
     let touchStartY = 0;
 
@@ -165,12 +185,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         const dx = touchEndX - touchStartX;
         const dy = touchEndY - touchStartY;
 
-        // Only trigger if movement is primarily horizontal and exceeds threshold
-        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
-            if (dx < 0) {
-                goToNextSlide(); // Swipe left -> forward
+        const threshold = 50;
+
+        // Support both horizontal swipe and vertical "scroll"
+        if (Math.abs(dx) > threshold || Math.abs(dy) > threshold) {
+            if (Math.abs(dx) > Math.abs(dy)) {
+                // Horizontal swipe
+                if (dx < 0) goToNextSlide();
+                else goToPrevSlide();
             } else {
-                goToPrevSlide(); // Swipe right -> back
+                // Vertical "scroll" swipe
+                if (dy < 0) goToNextSlide();
+                else goToPrevSlide();
             }
         }
     }, { passive: true });

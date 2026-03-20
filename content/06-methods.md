@@ -18,3 +18,7 @@ bg: "aurora"
 |||
 
 ![](https://github.com/atmoschem/vein/raw/master/man/figures/logo.png)
+
+```r
+vein::get_project("brazil_td", "brazil_td")
+```
