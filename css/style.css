@@ -103,12 +103,18 @@ p { font-size: 1.25rem; margin-bottom: 1.5rem; }
 ul { margin-left: 1.5rem; margin-bottom: 1.5rem; font-size: 1.25rem; }
 li { margin-bottom: 0.5rem; }
 
-/* Images inside columns */
-.col-content img {
+/* Responsive & Styled Images */
+.slide img {
     max-width: 100%; 
+    max-height: 60vh; /* Cap height to leave room for text/padding */
+    height: auto;
+    width: auto;
+    object-fit: contain;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
     border: 1px solid var(--glass-border);
+    display: block;
+    margin: 1.5rem auto;
 }
 
 /* Responsive video & Widget styling */
@@ -346,9 +352,11 @@ li { margin-bottom: 0.5rem; }
     width: 100%;
 }
 
-.slide-logo {
-    max-height: 50px; /* Limits the height so they stay small and elegant */
+.slide .slide-logo {
+    max-height: 40px; /* Reduced for more elegant presentation look */
     width: auto; /* Maintains aspect ratio */
+    display: inline-block; /* Ensure they stay side-by-side */
+    margin: 0; /* Reset margins from general .slide img rule */
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); /* Adds a subtle shadow for depth */
     opacity: 0.8; /* Makes them slightly subtle against the background */
     transition: opacity 0.3s ease;

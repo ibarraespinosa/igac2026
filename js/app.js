@@ -7,9 +7,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         'content/04-compare.md',
         'content/05-objetivos.md',
         'content/06-methods.md',
-        'content/07-results.md',
-        'content/08-conclusions.md',
-        'content/09-thanks.md'
+        'content/07-fe.md',
+        'content/20-thanks.md'
     ];
 
     let currentSlide = 0;
@@ -54,7 +53,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const wrapperClass = meta.layout === 'three-column' ? 'grid-wrapper' : 'glass-panel grid-wrapper';
                     finalHTML = `<div class="${wrapperClass}">${colsHTML}</div>`;
                 } else {
-                    finalHTML = `<div class="glass-panel content-wrapper">${marked.parse(markdownContent)}</div>`;
+                    // For centered, if markdown doesn't have a h1, use meta description or title if appropriate
+                    // Actually, let's just parse it as is, but we could add meta.title if it's not present in text
+                    const hasH1 = /^#\s/m.test(markdownContent);
+                    const titleHeader = (!hasH1 && meta.title && meta.title !== "Welcome") ? `<h1>${meta.title}</h1>` : ''; 
+                    finalHTML = `<div class="glass-panel content-wrapper">${titleHeader}${marked.parse(markdownContent)}</div>`;
                 }
 
                 slideEl.innerHTML = finalHTML;

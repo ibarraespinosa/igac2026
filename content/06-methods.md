@@ -3,19 +3,18 @@ title: "Methods"
 layout: "two-column"
 transition: "glitch"
 accent: "#00ffff"
-bg: "particles"
+bg: "aurora"
 ---
-# Inventarios Globales
 
-- [Crippa et al., (2024)](https://essd.copernicus.org/articles/16/2811/2024/) Emissions Database for Global Atmospheric Research (EDGAR) 1970-2023
-- [McDuffie et al., (2020)](https://essd.copernicus.org/articles/12/3413/2020/) Community Emissions Data System (CEDS)
-- [Soulie et al., (2024)](https://essd.copernicus.org/articles/16/2261/2024/) CAMS inventory 2000-2025
+# [VEIN](https://gmd.copernicus.org/articles/11/2209/2018/)
+
+- Consumo de combustible por estado y mes
+- Proyecciones en el pasado y en el futuro.
+- Flota inicial de Sao Paulo
+- Actividad calibrada con ventas de combustible.
+- [CETESB](https://www.cetesb.sp.gov.br/cetesb/qualidade_ambiental/emissao_veicular) ajustadas con mediciones en el túnel de Sao Paulo [(Nogueira et al, 2021)](https://pubs.acs.org/doi/full/10.1021/acs.est.1c01006?casa_token=mEaRvfeQiLYAAAAA%3AZ6Dq8VFF_BL5XTg_hSndT8p-51m1OW8UIgbfFX94NKOQoPcMPNYZHnvgjOOSC2MfgILU6pIU4IFT2g4)
+- Mecanismos quimico con [Carter (2015)](https://www.tandfonline.com/doi/full/10.1080/10962247.2015.1013646)
 
 |||
 
-# Inventarios Regionales
-- [Osses et al (2022)](https://essd.copernicus.org/articles/14/1359/2022/): Chile 1990-2020
-- [Rojas et al., (2023)](https://www.sciencedirect.com/science/article/pii/S1361920923001773?pes=vor&utm_source=acs&getft_integrator=acs): Colombia 1990-2020
-- [MMA-Brazil, (2011)](https://energiaeambiente.org.br/wp-content/uploads/2011/01/projeto_iema.pdf): Brazil 1989-2020
-- [Hoinaski et al., (2022)](https://essd.copernicus.org/articles/14/2939/2022/): Brazil 2013-2019
-- [Puliafito et al., (2021)](https://essd.copernicus.org/articles/13/5027/2021/): Argentina 1995-2020
+![](https://github.com/atmoschem/vein/raw/master/man/figures/logo.png)
